@@ -21,7 +21,11 @@
   "homepage": "https://github.com/boetzels/phybase_be#readme",
   "dependencies": {
     "apollo-server": "^3.5.0",
+    "bcrypt": "^5.0.1",
+    "dotenv": "^10.0.0",
     "graphql": "^15.8.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongodb": "^4.2.2",
     "nexus": "^1.1.0",
     "ts-node": "^10.4.0",
     "ts-node-dev": "^1.1.8",
