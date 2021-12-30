@@ -8,7 +8,7 @@ module.exports = {
         getUser: async(_, { id }, context) => {
             if (!context.userId) throw new Error('Something wrong');
 
-            if (context.userId !== id) throw new Error('Something wrong');
+            if (context.userId !== id) throw new Error('Something still wrong');
 
             return UserModel.findById(id);
         }
