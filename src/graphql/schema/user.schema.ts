@@ -1,4 +1,6 @@
-const User = `
+import { gql } from 'apollo-server-express';
+
+export const User = gql`
     type User {
         id: ID!
         email: String!
@@ -26,6 +28,4 @@ const User = `
             password: String!
         ): Token!,
 }
-`
-
-module.exports = User;
+`;

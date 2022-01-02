@@ -1,20 +1,23 @@
-import { idText } from "typescript";
+//import { idText } from "typescript";
+/*
+    jest tests for the user resolvers
+*/
 
-const User = require('../../../models/user.model');
-const resolvers = require('./user');
-const { setupDB } = require('../test-setup');
+import { UserModel } from '../../../db/models/user.dbmodel';
+import { UserResolvers } from './user.resolve';
+import { setupDB } from '../test-setup';
 
 setupDB('users');
 
 describe('getUser', () => {
-    it('Should save user to DB', async done => {
-        const newUser = new User({
+    it('Should save user to DB', async () => {
+        const newUser = new UserModel({
             email: 'test@jest.com',
             password:'jest',
         });
         await newUser.save();
 
-        const fetchedUser = await resolvers.Query.getUser(
+        const fetchedUser = await UserResolvers.Query.getUser(
             {},
             { id: newUser.id, },
             { userId: newUser.id, },
@@ -22,38 +25,38 @@ describe('getUser', () => {
 
         expect(fetchedUser.id).toBe(newUser.id);
 
-        done();
+        //done();
     });
 
-    it('Should throw if no auth', async done => {
-        const newUser = new User({
+    it('Should throw if no auth', async () => {
+        const newUser = new UserModel({
             email: 'test@jest.com',
             password:'jest',
         });
         await newUser.save();
 
-        await expect(resolvers.Query.getUser(
+        await expect(UserResolvers.Query.getUser(
             {},
             { id: newUser.id },
             {},
         )).rejects.toThrow(/Something wrong/);
 
-        done();
+        //done();
     });
 
-    it('Should throw if no auth', async done => {
-        const newUser = new User({
+    it('Should throw if no auth', async () => {
+        const newUser = new UserModel({
             email: 'test@jest.com',
             password:'jest',
         });
         await newUser.save();
 
-        await expect(resolvers.Query.getUser(
+        await expect(UserResolvers.Query.getUser(
             {},
             { id: newUser.id },
             { userId: '123' },
         )).rejects.toThrow(/Something still wrong/);
 
-        done();
+        //done();
     });
 });

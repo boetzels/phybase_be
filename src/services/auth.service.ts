@@ -2,23 +2,25 @@ const bcrypt = require("bcrypt");
 const dotenv = require("dotenv");
 const jwt = require("jsonwebtoken");
 
-import User from '../interfaces/user';
+import { User as UserInterface } from '../interfaces/user.interface';
 
 // get env vars
 dotenv.config();
 
-class Auth {
+export class Auth {
     static async hashPW(password: string) {
         const saltRounds = 10;
         const salt = bcrypt.genSaltSync(saltRounds);
-        return bcrypt.hashSync(password, salt);
+        const hash: string = await bcrypt.hashSync(password, salt);
+        return hash;
     }
 
     static async matchPW(checkPW: string, dbPW: string) {
-        return bcrypt.compareSync(checkPW, dbPW);
+        const compare = await bcrypt.compareSync(checkPW, dbPW);
+        return compare;
     }
 
-    static generateJwt(userData: User) {
+    static generateJwt(userData: UserInterface) {
         return jwt.sign(
             userData,
             process.env.TOKEN_SECRET,
@@ -30,7 +32,7 @@ class Auth {
         return jwt.verify(token, process.env.TOKEN_SECRET);
     }
 
-    static getUserId({ req, authToken = ''}): string | null {
+    static getUserId({ req, authToken = ''}: { req?: any, authToken?: string}): string | null {
         if (req && req.request?.headers)   {
             const authHeader: string = req.request.authorization;
 
@@ -48,5 +50,3 @@ class Auth {
         return null;
     }
 }
-
-module.exports = Auth;

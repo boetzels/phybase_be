@@ -1,7 +1,11 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+/* 
+    user.dbmodel.ts
 
-const userSchema = new Schema({
+    creates the user mongoose schema
+ */
+import mongoose from 'mongoose';
+
+export const UserSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true,
@@ -17,5 +21,3 @@ const userSchema = new Schema({
 },{
     timestamps: true,
 });
-
-module.exports = mongoose.model("User",userSchema);
