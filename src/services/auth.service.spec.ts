@@ -1,7 +1,7 @@
 import { Auth as AuthService } from './auth.service';
 
 describe('JWT', () => {
-    const jwt_token = 'eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NDA4NDkzMTYsInVzZXJJZCI6IjEiLCJlbWFpbCI6InRlc3RAamVzdC5jb20ifQ.YC7Y3fC5R8ytVYWIao4-nLr6SalqFXs5VdrUEYFJj8s';
+    const jwt_token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwaHliYXNlIiwiaWF0IjoxNjQxMjQyMDY1LCJleHAiOjE2NDEyNDMyNjYsImF1ZCI6Ind3dy5leGFtcGxlLmNvbSIsInN1YiI6Impyb2NrZXRAZXhhbXBsZS5jb20iLCJ1c2VySWQiOiIxIiwiZW1haWwiOiJ0ZXN0QGplc3QuY29tIn0.-LG5sF--C5RYvnwjNvt_Wh2WKAHbmvFU38Mu1U44SJs';
 
     it('Should generate a JWT', (done: any) => {
         const token = AuthService.generateJwt({

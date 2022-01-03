@@ -7,7 +7,7 @@ import { UserModel } from '../../../db/models/user.dbmodel';
 import { UserResolvers } from './user.resolve';
 import { setupDB } from '../test-setup';
 
-setupDB('users');
+setupDB('users-test');
 
 describe('getUser', () => {
     it('Should save user to DB', async () => {

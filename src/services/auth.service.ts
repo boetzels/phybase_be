@@ -24,7 +24,7 @@ export class Auth {
         return jwt.sign(
             userData,
             process.env.TOKEN_SECRET,
-            { expiresIn: '1 day'},
+            { expiresIn: '1d'},
         );
     }
 
@@ -32,9 +32,9 @@ export class Auth {
         return jwt.verify(token, process.env.TOKEN_SECRET);
     }
 
-    static getUserId({ req, authToken = ''}: { req?: any, authToken?: string}): string | null {
+    static getUserId({ req, authToken }: { req?: any, authToken?: string}): string | null {
         if (req && req.request?.headers)   {
-            const authHeader: string = req.request.authorization;
+            const authHeader: string | null = req.request.headers.authorization;
 
             if (authHeader) {
                 const token = authHeader.replace('Bearer ','');
@@ -42,10 +42,10 @@ export class Auth {
                 const { userId } = this.getJwtPayload(token);
                 return userId;
             }
-            else if (authToken) {
-                const { userId } = this.getJwtPayload(authToken);
-                return userId;
-            }
+        }
+        else if (authToken) {
+            const { userId } = this.getJwtPayload(authToken);
+            return userId;
         }
         return null;
     }

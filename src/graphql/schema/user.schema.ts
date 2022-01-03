@@ -8,7 +8,7 @@ export const User = gql`
         name: String!
     }
 
-    type token {
+    type Token {
         jwt: ID!
     }
 
@@ -27,5 +27,5 @@ export const User = gql`
             email: String!
             password: String!
         ): Token!,
-}
+    }
 `;

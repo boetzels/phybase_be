@@ -1,3 +1,3 @@
-export const typeDefs = {
-    User: require('./user'),
-};
+import { User } from './user.schema';
+
+export const typeDefs = [ User ];
