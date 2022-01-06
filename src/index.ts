@@ -5,13 +5,15 @@ dotenv.config();
 import { ApolloServer } from "apollo-server";
 import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core";
 
-const { dbConnector } = require('./db/mongodb.connector');
+import { dbConnector } from './db/mongodb.connector';
 import { Auth } from './services/auth.service';
 
 import { typeDefs } from './graphql/schema/index';
 import { resolvers } from './graphql/resolve/index';
 
-export const server = new ApolloServer({
+dbConnector.connect();
+
+const server = new ApolloServer({
     typeDefs,
     resolvers,
     plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
