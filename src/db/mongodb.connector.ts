@@ -3,27 +3,29 @@
 **/
 import mongoose from "mongoose";
 
-class dbConnector {
-    static connect() {
-        const dbuser: string | undefined = process.env.DBUSER;
-        let dbpwd: string | undefined = process.env.DBPWD;
+const dbConnector = new Promise<boolean>((resolve, reject) => {
+    console.log('connecting to DB');
+    const dbuser: string | undefined = process.env.DBUSER;
+    let dbpwd: string | undefined = process.env.DBPWD;
 
-        let authString: string = '';
-        if (dbuser && dbpwd) {
-            dbpwd = encodeURIComponent(dbpwd);
-            authString = `${dbuser}:${dbpwd}@`
-        }
-
-
-        mongoose.connect(`mongodb://${authString}localhost:27017/${process.env.DBNAME}?authSource=admin`);
-
-        const dbConnector = mongoose.connection;
-        dbConnector.on('error', () => {
-            console.error("Error while connecting to DB");
-        });
-
-        console.log('connected to DB');
+    let authString: string = '';
+    if (dbuser && dbpwd) {
+        dbpwd = encodeURIComponent(dbpwd);
+        authString = `${dbuser}:${dbpwd}@`
     }
-}
+
+    mongoose.connect(`mongodb://${authString}localhost:27017/${process.env.DBNAME}?authSource=admin`);
+
+    const dbConnection = mongoose.connection;
+    dbConnection.on('error', () => {
+        console.error("Error while connecting to DB");
+        reject(false);
+    });
+
+    dbConnection.on('connected', () => {
+        console.log('connected to DB');
+        resolve(true);
+    });
+});
 
 export { dbConnector };

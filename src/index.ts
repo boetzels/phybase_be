@@ -11,16 +11,28 @@ import { Auth } from './services/auth.service';
 import { typeDefs } from './graphql/schema/index';
 import { resolvers } from './graphql/resolve/index';
 
-dbConnector.connect();
+try {
+    dbConnector.then(() => {
+        const server = new ApolloServer({
+            typeDefs,
+            resolvers,
+            context: ({ req }) => {
+                return {
+                    ...req,
+                    userId: 
+                        req ? Auth.getUserId({ req }) : null
+                };
+            },
+            plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
+        });
+        
+        const port = 4000;
+        
+        server.listen({ port }).then(({ url }) => {
+            console.log(`Server ready at ${url}`);
+        })
+    });
+} catch (e) {
+    throw new Error(e)
+}
 
-const server = new ApolloServer({
-    typeDefs,
-    resolvers,
-    plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
-});
-
-const port = 4000;
-
-server.listen({ port }).then(({ url }) => {
-    console.log(`Server ready at ${url}`);
-})
