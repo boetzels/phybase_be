@@ -4,14 +4,16 @@ import { Auth as AuthService } from '../../../services/auth.service';
 
 export const UserResolvers = {
     Query: {
-        getUsers: () => UserModel.find(),
+        getUsers: async () => {
+            return await UserModel.find({}).exec();
+        },
 
         getUser: async(parent: any, { id }: { id: string}, context: any) => {
-            if (!context.userId) throw new Error('Something wrong');
+            if (!context.userId) throw new Error('Something wrong (auth)');
 
             if (context.userId !== id) throw new Error('Something still wrong');
 
-            return UserModel.findById(id);
+            return await UserModel.findById(id).exec();
         }
     },
 

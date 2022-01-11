@@ -33,8 +33,8 @@ export class Auth {
     }
 
     static getUserId({ req, authToken }: { req?: any, authToken?: string}): string | null {
-        if (req && req.request?.headers)   {
-            const authHeader: string | null = req.request.headers.authorization;
+        if (req && req.headers)   {
+            const authHeader: string | null = req.headers.authorization;
 
             if (authHeader) {
                 const token = authHeader.replace('Bearer ','');

@@ -19,8 +19,7 @@ try {
             context: ({ req }) => {
                 return {
                     ...req,
-                    userId: 
-                        req ? Auth.getUserId({ req }) : null
+                    userId: req ? Auth.getUserId({ req }) : null,
                 };
             },
             plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
