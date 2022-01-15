@@ -29,13 +29,13 @@ export const UserResolvers = {
         },
 
         signin: async(parent: any, { email, password, name }: { email: string, password: string, name: string }) => {
-            if (!email) throw new Error('Bad auth');
+            if (!email) throw new Error('Bad auth, email missing');
 
             const user = await UserModel.findOne({ email: email});
-            if (!user) throw new Error('Bad auth');
+            if (!user) throw new Error('Bad auth, user not found');
 
             const checkPassword = await AuthService.matchPW(password, user.password);
-            if (!checkPassword) throw new Error('Bad auth');
+            if (!checkPassword) throw new Error('Bad auth, password mismatch');
 
             const jwtPayload: UserInterface = {
                 userId: user.id,
